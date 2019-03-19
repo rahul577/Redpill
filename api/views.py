@@ -71,7 +71,7 @@ def get_headlines(query):
     return JsonResponse(json.dumps(l), safe=False)"""
 
 
-def home(request):
+def home(request, topic):
     #test('rahul')
-    return get_headlines('new_zealand_terror_attack')
+    return get_headlines(topic)
     #return render(request, 'index.html')
