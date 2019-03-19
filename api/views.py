@@ -32,7 +32,7 @@ def get_headlines(query):
      headlines = [[dic['url'], dic['title'],
                   analyze_headline(dic['title'])]
                  for dic in data['articles'][:20]]
-     ret = json.dumps(headlines)
+     ret = json.dumps(headlines[0])
      return JsonResponse(json.loads(ret), safe = False)
 
 
