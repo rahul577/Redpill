@@ -21,28 +21,13 @@ LINK = "https://newsapi.org/v2/everything?q="
 def get_headlines(query):
  query = '+'.join(query.split())
  with urllib.request.urlopen(f"{LINK}{query}&language=en&sortBy=popularity&apiKey={API_KEY}") as url:
-     #data = json.loads(url.read().decode())
-     #print(*[dic['title'] for dic in data['articles'][:20]], sep='\n')
-     #headlines = [{'url':dic['url'], 'title':dic['title'],
-                   #'label':analyze_headline(dic['title'])}
-                  #for dic in data['articles'][:20]]
-
      data = json.loads(url.read().decode())
-        #print(*[dic['title'] for dic in data['articles'][:20]], sep='\n')
-     headlines = [[dic['url'], dic['title'],
-                  analyze_headline(dic['title'])]
-                 for dic in data['articles'][:20]]
-     ret = json.dumps(headlines)
-     return JsonResponse(json.loads(ret), safe = False)
-
-
-
-     """ret = json.dumps(headlines[0])
-     i = 1
-     while i < len(headlines):
-         ret += json.dumps(headlines[i])
-         i += 1
-     return JsonResponse(json.loads(ret))"""
+     #print(*[dic['title'] for dic in data['articles'][:20]], sep='\n')
+     headlines = [{'url':dic['url'], 'title':dic['title'],
+                   'label':analyze_headline(dic['title'])}
+                  for dic in data['articles'][:20]]
+     ret = json.dumps(headlines[0])
+     return JsonResponse(json.loads(ret))
 
 #print(*get_headlines("india pakistan tension"), sep='\n')
 
