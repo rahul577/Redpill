@@ -42,5 +42,7 @@ def get_headlines(query):
 
 def home(request):
     #test('rahul')
-    return get_headlines('new zealand terror attack')
+    l = [[1, 2], [3, 4]]
+    return JsonResponse(json.dumps(l), safe=False)
+    #return get_headlines('new zealand terror attack')
     #return render(request, 'index.html')
