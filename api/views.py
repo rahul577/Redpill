@@ -42,7 +42,7 @@ def get_headlines(query):
 
 def home(request):
     #test('rahul')
-    l = [[1, 2], [3, 4]]
-    return JsonResponse(json.dumps(l), safe=False)
+    row = [1,[0.1,0.2],[[1234,1],[134,2]]]
+    return JsonResponse(json.dumps(row), safe=False)
     #return get_headlines('new zealand terror attack')
     #return render(request, 'index.html')
