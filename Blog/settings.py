@@ -25,7 +25,8 @@ SECRET_KEY = 'm(1nz13$2hh02qslwl+-g@+#7m+pcpdlhyhj4ev+c=w#2uxz7#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['redpillbrogram.herokuapp.com']
+ALLOWED_HOSTS = ['redpillbrogram.herokuapp.com',
+                 '127.0.0.1',]
 
 
 # Application definition

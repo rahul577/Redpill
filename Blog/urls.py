@@ -25,6 +25,6 @@ from api import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls, name='admin'),
-    url(r'^show/$', views.test, name='show')
+    url(r'^show/$', views.home, name='show')
     #url(r'^',include(router.urls)),
 ]
