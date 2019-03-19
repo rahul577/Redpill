@@ -28,8 +28,8 @@ def get_headlines(query):
                   for dic in data['articles'][:20]]
      l = {'d1' : {'name':'bob', 'place':'lawn', 'animal':'man'},
               'd2' : {'name':'spot', 'place':'bed', 'animal':'dog'}}
-     ret = json.dumps(headlines)
-     return JsonResponse(json.loads(ret), safe = False)
+     ret = json.dumps(headlines[0])
+     return JsonResponse(json.loads(ret))
 
 #print(*get_headlines("india pakistan tension"), sep='\n')
 
