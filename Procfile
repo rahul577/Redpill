@@ -1,1 +1,1 @@
-web: gunicorn Blog.wsgi --log-file -
+web: python manage.py migrate && gunicorn pong_matcher_django.wsgi --log-file -
