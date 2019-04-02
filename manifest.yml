@@ -1,0 +1,6 @@
+---
+applications:
+ - name: Blog
+   random-route: true
+   collectstatic: false
+   memory: 128M
