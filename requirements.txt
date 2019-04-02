@@ -5,3 +5,4 @@ djangorestframework
 requests
 textblob
 bs4
+whitenoise
