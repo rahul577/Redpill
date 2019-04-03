@@ -19,17 +19,15 @@ API_KEY  = "318d913237d64b00b18eefa946b5ecbe"
 LINK = "https://newsapi.org/v2/everything?q="
 def get_headlines(query):
     query = '+'.join(query.split('_'))
-    l = [1, 2]
-    ret = json.dumps(l)
-    return JsonResponse(json.loads(ret), safe=False)
-    """with urllib.request.urlopen(f"{LINK}{query}&language=en&sortBy=popularity&apiKey={API_KEY}") as url:
+    link_api = LINK + query + "&language=en&sortBy=popularity&apiKey=" + API_KEY
+    with urllib.request.urlopen(link_api) as url:
         data = json.loads(url.read().decode())
         headlines = {"positive":[], "negative":[]}
         for dic in data['articles'][:20]:
             result = analyze_headline(dic['title'])
             headlines[result].append({'url':dic['url'], 'title':dic['title']})
         ret = json.dumps(headlines)
-        return JsonResponse(json.loads(ret), safe=False)"""
+        return JsonResponse(json.loads(ret), safe=False)
 
 
 """threshold = 0
