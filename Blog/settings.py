@@ -52,6 +52,23 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
+# Database
+# https://docs.djangoproject.com/en/1.7/ref/settings/#databases
+
+import json
+MYSQL = json.loads(os.environ['VCAP_SERVICES'])['cleardb'][0]['credentials']
+DATABASES = {
+	'default': {
+		'ENGINE': 'django.db.backends.mysql',
+		'NAME': MYSQL['name'],
+		'USER': MYSQL['username'],
+		'PASSWORD': MYSQL['password'],
+		'HOST': MYSQL['hostname'],
+		'PORT': MYSQL['port']
+	}
+}
+
 ROOT_URLCONF = 'Blog.urls'
 
 TEMPLATES = [
