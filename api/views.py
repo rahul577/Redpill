@@ -18,10 +18,10 @@ from sklearn.svm import LinearSVC
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 from textblob import TextBlob
 import os
-#cwd = os.getcwd()
 #nltk.download("punkt")
 def load_classifiers(file_names):
     classifiers = []
+    cwd = os.getcwd()
     for file in file_names:
         classifier_f = open(cwd+"/api/"+file, "rb")
         classifiers.append(pickle.load(classifier_f))
@@ -29,6 +29,7 @@ def load_classifiers(file_names):
     classifier_f.close
     return classifiers
 #classifiers=load_classifiers(["clf1.pickle","clf2.pickle","clf3.pickle"])
+
 def create_features1(words):
     features = {word:True for word in words
                 if word not in stopwords.words("english")}
@@ -65,6 +66,7 @@ def most_common(votes):
         return "positive"
     else:
         return "negative"
+
 def classify(headline):
     classifiers = load_classifiers(["clf1.pickle","clf2.pickle","clf3.pickle"])
     features = create_features1(word_tokenize(headline))
@@ -77,6 +79,7 @@ def classify(headline):
 
 API_KEY  = "318d913237d64b00b18eefa946b5ecbe"
 LINK = "https://newsapi.org/v2/everything?q="
+
 def get_headlines(query):
     query = '+'.join(query.split('_'))
     link_api = LINK + query + "&language=en&sortBy=popularity&apiKey=" + API_KEY
