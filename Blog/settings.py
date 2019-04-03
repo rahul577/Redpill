@@ -54,19 +54,13 @@ MIDDLEWARE = [
 
 
 # Database
-# https://docs.djangoproject.com/en/1.7/ref/settings/#databases
+# https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-import json
-MYSQL = json.loads(os.environ['VCAP_SERVICES'])['cleardb'][0]['credentials']
 DATABASES = {
-	'default': {
-		'ENGINE': 'django.db.backends.mysql',
-		'NAME': MYSQL['name'],
-		'USER': MYSQL['username'],
-		'PASSWORD': MYSQL['password'],
-		'HOST': MYSQL['hostname'],
-		'PORT': MYSQL['port']
-	}
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
 }
 
 ROOT_URLCONF = 'Blog.urls'
