@@ -1,0 +1,2 @@
+FAILED
+Error read/writing config:  open /home/rahul/.cf/config.json: permission denied
