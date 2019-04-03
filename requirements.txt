@@ -3,4 +3,5 @@ djangorestframework
 requests
 textblob
 bs4
+gunicorn
 whitenoise
