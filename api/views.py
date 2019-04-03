@@ -19,7 +19,7 @@ from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 from textblob import TextBlob
 import os
 cwd = os.getcwd()
-nltk.download("punkt")
+#nltk.download("punkt")
 def load_classifiers(file_names):
     classifiers = []
     for file in file_names:
