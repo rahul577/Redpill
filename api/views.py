@@ -74,5 +74,5 @@ def get_headlines(query):
 
 def home(request, topic):
     #test('rahul')
-    return get_headlines('rahu;')
+    return get_headlines(topic)
     #return render(request, 'index.html')
