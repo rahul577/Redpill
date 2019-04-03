@@ -6,7 +6,6 @@ from django.http import HttpResponse
 import json
 import nltk
 import pickle
-import pandas as pd
 import nltk.classify.util
 from nltk.classify import NaiveBayesClassifier
 from nltk.corpus import stopwords
