@@ -24,7 +24,7 @@ def load_classifiers(file_names):
     cwd = os.getcwd()
     print(cwd)
     for file in file_names:
-        classifier_f = open(cwd+"/"+file, "rb")
+        classifier_f = open(cwd+"/api/"+file, "rb")
         classifiers.append(pickle.load(classifier_f))
 
     classifier_f.close
