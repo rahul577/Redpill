@@ -21,7 +21,7 @@ import os
 #nltk.download("punkt")
 def load_classifiers(file_names):
     classifiers = []
-    cwd = os.getcwd()
+    cwd = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     print(cwd)
     for file in file_names:
         classifier_f = open(cwd+"/api/"+file, "rb")
