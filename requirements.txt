@@ -1,5 +1,4 @@
 django
-gunicorn
 djangorestframework
 requests
 textblob
