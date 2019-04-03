@@ -5,3 +5,4 @@ requests
 textblob
 bs4
 whitenoise
+sqlite==3.8.3
