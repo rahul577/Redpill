@@ -18,7 +18,7 @@ from sklearn.svm import LinearSVC
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 from textblob import TextBlob
 import os
-cwd = os.getcwd()
+#cwd = os.getcwd()
 #nltk.download("punkt")
 def load_classifiers(file_names):
     classifiers = []
@@ -28,7 +28,7 @@ def load_classifiers(file_names):
 
     classifier_f.close
     return classifiers
-classifiers=load_classifiers(["clf1.pickle","clf2.pickle","clf3.pickle"])
+#classifiers=load_classifiers(["clf1.pickle","clf2.pickle","clf3.pickle"])
 def create_features1(words):
     features = {word:True for word in words
                 if word not in stopwords.words("english")}
@@ -66,6 +66,7 @@ def most_common(votes):
     else:
         return "negative"
 def classify(headline):
+    classifiers = load_classifiers(["clf1.pickle","clf2.pickle","clf3.pickle"])
     features = create_features1(word_tokenize(headline))
     votes =[]
     votes.append(textblob_classify(headline))
