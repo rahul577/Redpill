@@ -5,3 +5,6 @@ textblob
 bs4
 gunicorn
 whitenoise
+nltk
+sklearn
+vadersentiment

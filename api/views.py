@@ -4,16 +4,78 @@ import urllib.request, json
 from django.http import JsonResponse
 from django.http import HttpResponse
 import json
+import nltk
+import pickle
+import pandas as pd
+import nltk.classify.util
+from nltk.classify import NaiveBayesClassifier
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+from sklearn.model_selection import train_test_split
+from nltk.classify.scikitlearn import SklearnClassifier
+#from sklearn.naive_bayes import MultinomialNB,BernoulliNB
+from sklearn.linear_model import LogisticRegression
+from sklearn.svm import LinearSVC
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+from textblob import TextBlob
+import os
+cwd = os.getcwd()
+nltk.download("punkt")
+def load_classifiers(file_names):
+    classifiers = []
+    for file in file_names:        
+        classifier_f = open(cwd+"/api/"+file, "rb")
+        classifiers.append(pickle.load(classifier_f))
 
-threshold = 0
-def analyze_headline(headline):
+    classifier_f.close
+    return classifiers
+classifiers=load_classifiers(["clf1.pickle","clf2.pickle","clf3.pickle"])
+def create_features1(words):
+    features = {word:True for word in words 
+                if word not in stopwords.words("english")}
+    return features
+
+def textblob_classify(headline):
+    threshold = 0
     polarity = TextBlob(headline).sentiment.polarity
     if polarity >= threshold:
         #positive
-        return "positive"
+        return "pos"
     else:
         #negative
+        return "neg"
+    
+def vader_classify(headline):
+    threshold = 0.5
+    analyzer = SentimentIntensityAnalyzer()
+    vs = analyzer.polarity_scores(headline)
+    if vs["compound"] > -threshold:
+        return "pos"
+    else:
+        return "neg"
+    
+def most_common(votes):
+    pos_count =0
+    neg_count=0
+    for vote in votes:
+        if vote=="pos":
+            pos_count+=1
+        else:
+            neg_count+=1
+    if pos_count >= neg_count:
+        return "positive"
+    else:
         return "negative"
+def classify(headline):
+    features = create_features1(word_tokenize(headline))
+    votes =[]
+    votes.append(textblob_classify(headline))
+    votes.append(vader_classify(headline))
+    print(f"votes:{votes}")
+    for cl in classifiers:
+        votes.append(cl.classify(features)) 
+    print(f"votes:{votes}")
+    return most_common(votes)
 
 API_KEY  = "318d913237d64b00b18eefa946b5ecbe"
 LINK = "https://newsapi.org/v2/everything?q="
@@ -24,52 +86,11 @@ def get_headlines(query):
         data = json.loads(url.read().decode())
         headlines = {"positive":[], "negative":[]}
         for dic in data['articles'][:20]:
-            result = analyze_headline(dic['title'])
+            result = classify(dic['title'])
             headlines[result].append({'url':dic['url'], 'title':dic['title']})
         ret = json.dumps(headlines)
         return JsonResponse(json.loads(ret), safe=False)
 
-
-"""threshold = 0
-def analyze_headline(headline):
- polarity = TextBlob(headline).sentiment.polarity
- if polarity >= threshold:
-     #positive
-     return 1
- else:
-     #negative
-     return -1
-
-API_KEY  = "318d913237d64b00b18eefa946b5ecbe"
-LINK = "https://newsapi.org/v2/everything?q="
-def get_headlines(query):
-    query = '+'.join(query.split())
-    with urllib.request.urlopen(f"{LINK}{query}&language=en&sortBy=popularity&apiKey={API_KEY}") as url:
-        data = json.loads(url.read().decode())
-        #print(*[dic['title'] for dic in data['articles'][:20]], sep='\n')
-        headlines = [{'url':dic['url'], 'title':dic['title'],
-                   'label':analyze_headline(dic['title'])}
-                  for dic in data['articles'][:20]]
-        ret = json.dumps(headlines)
-        return JsonResponse(json.loads(ret), safe=False)
-
-        headlines = {"positive":[], "negative":[]}
-        for dic in data['articles'][:20]:
-          result = analyze_headline(dic['title'])
-          headlines[result].append({'url':dic['url'], 'title':dic['title']})
-        ret = json.dumps(headlines)
-        return JsonResponse(json.loads(ret), safe=False)
-
-#print(*get_headlines("india pakistan tension"), sep='\n')
-
-#analyzed_headlines = scrapper(topic)
-#print(*analyzed_headlines, sep='\n')"""
-
-"""def test(temp):
-    return get_headlines('new zealand terror attack')
-    l = {'a' : 1, 'b' : 2, 'c' : 3}
-    #if temp == 'rahul':
-    return JsonResponse(json.dumps(l), safe=False)"""
 
 
 def home(request, topic):
