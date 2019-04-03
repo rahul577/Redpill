@@ -22,14 +22,14 @@ import os
 def load_classifiers(file_names):
     classifiers = []
     cwd = os.getcwd()
+    print(cwd)
     for file in file_names:
-        classifier_f = open(cwd+"/api/"+file, "rb")
+        classifier_f = open(cwd+"/"+file, "rb")
         classifiers.append(pickle.load(classifier_f))
 
     classifier_f.close
     return classifiers
 #classifiers=load_classifiers(["clf1.pickle","clf2.pickle","clf3.pickle"])
-
 def create_features1(words):
     features = {word:True for word in words
                 if word not in stopwords.words("english")}
