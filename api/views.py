@@ -23,7 +23,7 @@ cwd = os.getcwd()
 nltk.download("punkt")
 def load_classifiers(file_names):
     classifiers = []
-    for file in file_names:        
+    for file in file_names:
         classifier_f = open(cwd+"/api/"+file, "rb")
         classifiers.append(pickle.load(classifier_f))
 
@@ -31,7 +31,7 @@ def load_classifiers(file_names):
     return classifiers
 classifiers=load_classifiers(["clf1.pickle","clf2.pickle","clf3.pickle"])
 def create_features1(words):
-    features = {word:True for word in words 
+    features = {word:True for word in words
                 if word not in stopwords.words("english")}
     return features
 
@@ -44,7 +44,7 @@ def textblob_classify(headline):
     else:
         #negative
         return "neg"
-    
+
 def vader_classify(headline):
     threshold = 0.5
     analyzer = SentimentIntensityAnalyzer()
@@ -53,7 +53,7 @@ def vader_classify(headline):
         return "pos"
     else:
         return "neg"
-    
+
 def most_common(votes):
     pos_count =0
     neg_count=0
@@ -71,10 +71,8 @@ def classify(headline):
     votes =[]
     votes.append(textblob_classify(headline))
     votes.append(vader_classify(headline))
-    print(f"votes:{votes}")
     for cl in classifiers:
-        votes.append(cl.classify(features)) 
-    print(f"votes:{votes}")
+        votes.append(cl.classify(features))
     return most_common(votes)
 
 API_KEY  = "318d913237d64b00b18eefa946b5ecbe"
